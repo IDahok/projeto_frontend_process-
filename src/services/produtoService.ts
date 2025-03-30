@@ -1,6 +1,6 @@
 import { Produto } from '../types/Produto';
 
-const API_URL = 'http://localhost:3000/api/produtos'; // Ajuste conforme sua API
+const API_URL = `${process.env.REACT_APP_API_URL}/api/produtos`; // Ajuste conforme sua API
 
 export const produtoService = {
     listar: async (): Promise<Produto[]> => {
