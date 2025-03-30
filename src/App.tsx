@@ -1,27 +1,14 @@
-import React, { Component } from "react";
+import React from 'react';
+import { ProdutoList } from './components/ProdutoList';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 
-interface AppState {
-}
-
-class App extends Component<{}, AppState> {
-  state: AppState = {
-  };
-
-  handleRestart = (): void => {
-    window.location.reload();
-  };
-
-  render() {
-    return (
-      <div className="main__wrap">
-        <main className="container">
-          <div className="card__box">
-            <h1>Hello World</h1>
-          </div>
-        </main>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <ProdutoList />
+    </div>
+  );
 }
 
 export default App; 
