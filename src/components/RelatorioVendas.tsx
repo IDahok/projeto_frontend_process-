@@ -8,11 +8,9 @@ export const RelatorioVendas: React.FC = () => {
     const [vendas, setVendas] = useState<Venda[]>([]);
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [erro, setErro] = useState<string>('');
-    const [loading, setLoading] = useState(true);
 
     const carregarDados = async () => {
         try {
-            setLoading(true);
             setErro('');
             const [vendasData, produtosData] = await Promise.all([
                 vendaService.listar(),
@@ -23,8 +21,6 @@ export const RelatorioVendas: React.FC = () => {
         } catch (error) {
             setErro('Erro ao carregar dados');
             console.error(error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -81,18 +77,6 @@ export const RelatorioVendas: React.FC = () => {
             setErro('Erro ao gerar relatório. Tente novamente.');
         }
     };
-
-    if (loading) {
-        return (
-            <div className="container mt-4">
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Carregando...</span>
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="container mt-4">
