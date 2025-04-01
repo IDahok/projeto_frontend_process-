@@ -2,6 +2,7 @@ import React from 'react';
 import { ProdutoList } from './components/ProdutoList';
 import { ClienteList } from './components/ClienteList';
 import { VendaList } from './components/VendaList';
+import { RelatorioVendas } from './components/RelatorioVendas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -25,6 +26,9 @@ function App() {
               <li className="nav-item">
                 <a className="nav-link" href="#vendas">Vendas</a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#relatorio">Relatório</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -39,6 +43,9 @@ function App() {
         </div>
         <div id="vendas" className="mt-5">
           <VendaList />
+        </div>
+        <div id="relatorio" className="mt-5">
+          <RelatorioVendas />
         </div>
       </div>
     </div>

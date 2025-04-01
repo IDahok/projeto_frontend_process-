@@ -154,7 +154,7 @@ export const VendaList: React.FC = () => {
                                 <td>{formatarData(venda.data_venda || '')}</td>
                                 <td>R$ {venda.valor_total}</td>
                                 <td>
-                                    <span className={`badge ${getStatusBadgeClass(venda.status)}`}>
+                                    <span className={`badge ${venda.status === 'cancelada' ? 'bg-danger' : venda.status === 'concluida' ? 'bg-success' : 'bg-warning'}`}>
                                         {venda.status}
                                     </span>
                                 </td>

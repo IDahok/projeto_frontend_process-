@@ -45,4 +45,16 @@ export const produtoService = {
         });
         if (!response.ok) throw new Error('Erro ao deletar produto');
     },
+
+    atualizarEstoque: async (id: number, quantidade: number): Promise<Produto> => {
+        const response = await fetch(`${API_URL}/${id}/estoque`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ quantidade }),
+        });
+        if (!response.ok) throw new Error('Erro ao atualizar estoque');
+        return response.json();
+    }
 }; 
