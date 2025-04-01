@@ -1,28 +1,80 @@
-# A simple projeto-vendas using [React.js](https://reactjs.org)
+# Sistema de Vendas
 
-> **This tiny application is like adding,removing,deleting, resetting products which reflects in the total number of products into our shopping cart.**
+Sistema de gerenciamento de vendas desenvolvido com React.js e TypeScript, permitindo o controle de produtos, clientes, vendas e geração de relatórios.
 
-**This is a very basic app but useful to understand the React Components, states, Data Flow, parent to child etc. .**
+## Funcionalidades
 
-## Live URL 1:-
+- **Produtos**: Cadastro, listagem, edição e exclusão de produtos
+- **Clientes**: Cadastro, listagem, edição e exclusão de clientes
+- **Vendas**: Registro e gerenciamento de vendas
+- **Relatórios**: Geração de relatórios detalhados de vendas com exportação para CSV
 
-> [Counter App](https://arnab-datta.github.io/projeto-vendas/)
+## Tecnologias Utilizadas
 
-## Live URL 2:-
+- React.js
+- TypeScript
+- Bootstrap 4
+- Font Awesome
+- Node.js
 
-> [Counter App](https://obscure-waters-60500.herokuapp.com)
+## Pré-requisitos
 
-**OR your can do the following to run in your local machine**
+- Node.js (versão 11.10.0 ou superior)
+- npm (versão 6.7.0 ou superior)
 
-## Scripts
+## Instalação
 
-Install node modules
+1. Clone o repositório:
+```bash
+git clone [URL_DO_REPOSITÓRIO]
+```
 
-#### `npm install`
+2. Instale as dependências:
+```bash
+npm install
+```
 
-In the project directory, you can run:
+3. Configure as variáveis de ambiente:
+Crie um arquivo `.env` na raiz do projeto com a seguinte variável:
+```
+REACT_APP_API_URL=http://localhost:3000
+```
 
-#### `npm start`
+## Executando o Projeto
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para iniciar o projeto em modo de desenvolvimento:
+
+```bash
+npm start
+```
+
+O projeto estará disponível em `http://localhost:8080`
+
+Para criar uma versão de produção:
+
+```bash
+npm run build
+```
+
+## Estrutura do Projeto
+
+```
+src/
+  ├── components/     # Componentes React
+  ├── services/      # Serviços de API
+  ├── types/         # Definições de tipos TypeScript
+  ├── App.tsx        # Componente principal
+  └── index.tsx      # Ponto de entrada da aplicação
+```
+
+## Contribuição
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
