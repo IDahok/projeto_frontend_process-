@@ -49,7 +49,7 @@ function App() {
 
   const handleAreaSubmit = async (areaData: Omit<Area, 'id'>) => {
     try {
-      if (editingArea) {
+      if (editingArea?.id) {
         await updateArea(editingArea.id, areaData);
       } else {
         await createArea(areaData);
@@ -58,12 +58,13 @@ function App() {
       setEditingArea(undefined);
     } catch (error) {
       console.error('Erro:', error);
+      alert('Erro ao salvar área. Por favor, tente novamente.');
     }
   };
 
   const handleProcessSubmit = async (processoData: Omit<Processo, 'id'>) => {
     try {
-      if (editingProcess) {
+      if (editingProcess?.id) {
         await updateProcesso(editingProcess.id, processoData);
       } else {
         await createProcesso(processoData);
@@ -72,6 +73,7 @@ function App() {
       setEditingProcess(undefined);
     } catch (error) {
       console.error('Erro:', error);
+      alert('Erro ao salvar processo. Por favor, tente novamente.');
     }
   };
 

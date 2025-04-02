@@ -1,7 +1,7 @@
 import { Area } from '../types/Area';
 import { Processo } from '../types/Processo';
 
-const API_URL = 'http://localhost:8080/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
 
 // Áreas
 export const getAreas = async (): Promise<Area[]> => {

@@ -47,6 +47,14 @@ const ProcessoForm: React.FC<ProcessoFormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.nome.trim()) {
+      alert('O nome do processo é obrigatório');
+      return;
+    }
+    if (!formData.area_id) {
+      alert('A área é obrigatória');
+      return;
+    }
     onSubmit(formData);
   };
 
@@ -213,8 +221,13 @@ const ProcessoForm: React.FC<ProcessoFormProps> = ({
 
       <div className="d-flex gap-2">
         <button type="submit" className="btn btn-primary">
-          {processo ? 'Atualizar' : 'Criar'}
+          Cadastrar
         </button>
+        {processo && processo.id !== 0 && (
+          <button type="button" className="btn btn-warning" onClick={() => onSubmit(formData)}>
+            Editar
+          </button>
+        )}
         <button type="button" className="btn btn-secondary" onClick={onCancel}>
           Cancelar
         </button>
