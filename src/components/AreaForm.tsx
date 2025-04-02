@@ -30,7 +30,20 @@ const AreaForm: React.FC<AreaFormProps> = ({ area, onSubmit, onCancel }) => {
       alert('O nome da área é obrigatório');
       return;
     }
-    onSubmit(formData);
+    if (!formData.responsavel.trim()) {
+      alert('O responsável é obrigatório');
+      return;
+    }
+
+    // Garante que os campos tenham valores válidos antes de enviar
+    const dataToSubmit = {
+      ...formData,
+      nome: formData.nome.trim(),
+      descricao: formData.descricao.trim(),
+      responsavel: formData.responsavel.trim()
+    };
+
+    onSubmit(dataToSubmit);
   };
 
   return (
@@ -69,13 +82,8 @@ const AreaForm: React.FC<AreaFormProps> = ({ area, onSubmit, onCancel }) => {
 
       <div className="d-flex gap-2">
         <button type="submit" className="btn btn-primary">
-          Cadastrar
+          Salvar
         </button>
-        {area && area.id !== 0 && (
-          <button type="button" className="btn btn-warning" onClick={() => onSubmit(formData)}>
-            Editar
-          </button>
-        )}
         <button type="button" className="btn btn-secondary" onClick={onCancel}>
           Cancelar
         </button>

@@ -12,8 +12,8 @@ interface ProcessoFormProps {
 
 const ProcessoForm: React.FC<ProcessoFormProps> = ({
   processo,
-  areas,
-  processos,
+  areas = [],
+  processos = [],
   onSubmit,
   onCancel,
 }) => {
@@ -29,24 +29,28 @@ const ProcessoForm: React.FC<ProcessoFormProps> = ({
     documentacao: '',
   });
 
+  const [novoSistema, setNovoSistema] = useState('');
+
   useEffect(() => {
     if (processo) {
       setFormData({
-        nome: processo.nome,
-        descricao: processo.descricao,
-        area_id: processo.area_id,
-        processo_pai_id: processo.processo_pai_id,
-        sistemas: processo.sistemas,
-        status: processo.status,
-        prioridade: processo.prioridade,
-        responsavel: processo.responsavel,
-        documentacao: processo.documentacao,
+        nome: processo.nome || '',
+        descricao: processo.descricao || '',
+        area_id: processo.area_id || 0,
+        processo_pai_id: processo.processo_pai_id || null,
+        sistemas: Array.isArray(processo.sistemas) ? processo.sistemas : [],
+        status: processo.status || 'ATIVO',
+        prioridade: processo.prioridade || 'MEDIA',
+        responsavel: processo.responsavel || '',
+        documentacao: processo.documentacao || '',
       });
     }
   }, [processo]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validações
     if (!formData.nome.trim()) {
       alert('O nome do processo é obrigatório');
       return;
@@ -55,16 +59,36 @@ const ProcessoForm: React.FC<ProcessoFormProps> = ({
       alert('A área é obrigatória');
       return;
     }
-    onSubmit(formData);
+    if (!formData.responsavel.trim()) {
+      alert('O responsável é obrigatório');
+      return;
+    }
+
+    // Prepara os dados para envio
+    const dataToSubmit: Omit<Processo, 'id'> = {
+      nome: formData.nome.trim(),
+      descricao: formData.descricao.trim(),
+      area_id: formData.area_id,
+      processo_pai_id: formData.processo_pai_id,
+      sistemas: formData.sistemas || [],
+      status: formData.status || 'ATIVO',
+      prioridade: formData.prioridade || 'MEDIA',
+      responsavel: formData.responsavel.trim(),
+      documentacao: formData.documentacao.trim(),
+    };
+
+    console.log('Enviando dados do processo:', dataToSubmit);
+    onSubmit(dataToSubmit);
   };
 
-  const handleSistemaAdd = () => {
-    const sistema = prompt('Digite o nome do sistema:');
-    if (sistema) {
+  const handleSistemaAdd = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (novoSistema.trim()) {
       setFormData(prev => ({
         ...prev,
-        sistemas: [...prev.sistemas, sistema],
+        sistemas: [...(prev.sistemas || []), novoSistema.trim()],
       }));
+      setNovoSistema('');
     }
   };
 
@@ -102,7 +126,7 @@ const ProcessoForm: React.FC<ProcessoFormProps> = ({
         <label className="form-label">Área</label>
         <select
           className="form-select"
-          value={formData.area_id}
+          value={formData.area_id || ''}
           onChange={e => setFormData(prev => ({ ...prev, area_id: Number(e.target.value) }))}
           required
         >
@@ -181,10 +205,12 @@ const ProcessoForm: React.FC<ProcessoFormProps> = ({
             type="text"
             className="form-control"
             placeholder="Digite o nome do sistema"
+            value={novoSistema}
+            onChange={e => setNovoSistema(e.target.value)}
             onKeyPress={e => {
               if (e.key === 'Enter') {
                 e.preventDefault();
-                handleSistemaAdd();
+                handleSistemaAdd(e);
               }
             }}
           />
@@ -197,7 +223,7 @@ const ProcessoForm: React.FC<ProcessoFormProps> = ({
           </button>
         </div>
         <div className="d-flex flex-wrap gap-2">
-          {formData.sistemas.map((sistema, index) => (
+          {(formData.sistemas || []).map((sistema, index) => (
             <div key={index} className="badge bg-primary d-flex align-items-center">
               {sistema}
               <button
@@ -221,13 +247,8 @@ const ProcessoForm: React.FC<ProcessoFormProps> = ({
 
       <div className="d-flex gap-2">
         <button type="submit" className="btn btn-primary">
-          Cadastrar
+          Salvar
         </button>
-        {processo && processo.id !== 0 && (
-          <button type="button" className="btn btn-warning" onClick={() => onSubmit(formData)}>
-            Editar
-          </button>
-        )}
         <button type="button" className="btn btn-secondary" onClick={onCancel}>
           Cancelar
         </button>

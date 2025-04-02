@@ -49,6 +49,7 @@ function App() {
 
   const handleAreaSubmit = async (areaData: Omit<Area, 'id'>) => {
     try {
+      console.log('Enviando área:', areaData);
       if (editingArea?.id) {
         await updateArea(editingArea.id, areaData);
       } else {
@@ -57,13 +58,14 @@ function App() {
       await fetchData();
       setEditingArea(undefined);
     } catch (error) {
-      console.error('Erro:', error);
+      console.error('Erro ao salvar área:', error);
       alert('Erro ao salvar área. Por favor, tente novamente.');
     }
   };
 
   const handleProcessSubmit = async (processoData: Omit<Processo, 'id'>) => {
     try {
+      console.log('Enviando processo:', processoData);
       if (editingProcess?.id) {
         await updateProcesso(editingProcess.id, processoData);
       } else {
@@ -72,7 +74,7 @@ function App() {
       await fetchData();
       setEditingProcess(undefined);
     } catch (error) {
-      console.error('Erro:', error);
+      console.error('Erro ao salvar processo:', error);
       alert('Erro ao salvar processo. Por favor, tente novamente.');
     }
   };
@@ -82,7 +84,15 @@ function App() {
   };
 
   const handleEditProcess = (processo: Processo) => {
-    setEditingProcess(processo);
+    console.log('Editando processo:', processo);
+    setEditingProcess({
+      ...processo,
+      sistemas: processo.sistemas || [],
+      status: processo.status || 'ATIVO',
+      prioridade: processo.prioridade || 'MEDIA',
+      responsavel: processo.responsavel || '',
+      documentacao: processo.documentacao || ''
+    });
   };
 
   const handleDeleteArea = async (id: number) => {
@@ -247,22 +257,22 @@ function App() {
                   </div>
                   <div className="card-body">
                     <ProcessoListComponent
-                      processos={processos}
-                      onEdit={setEditingProcess}
+                      processos={filteredProcessos}
+                      onEdit={handleEditProcess}
                       onDelete={handleDeleteProcess}
                     />
                   </div>
                 </div>
 
                 <div className="processos-tree">
-                  {filteredProcessos
+                  {filteredProcessos && filteredProcessos.length > 0 && filteredProcessos
                     .filter(p => !p.processo_pai_id)
                     .map(processo => (
                       <ProcessoTree
                         key={processo.id}
                         processo={processo}
                         areas={areas}
-                        processos={processos}
+                        processos={filteredProcessos}
                         onEdit={handleEditProcess}
                         onDelete={handleDeleteProcess}
                       />

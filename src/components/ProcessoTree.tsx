@@ -13,6 +13,10 @@ interface ProcessoTreeProps {
 const ProcessoTree: React.FC<ProcessoTreeProps> = ({ processo, areas, processos, onEdit, onDelete }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  if (!processo || !areas || !processos) {
+    return null;
+  }
+
   const getAreaName = (areaId: number) => {
     const area = areas.find(a => a.id === areaId);
     return area ? area.nome : 'Área não encontrada';
@@ -42,7 +46,7 @@ const ProcessoTree: React.FC<ProcessoTreeProps> = ({ processo, areas, processos,
     }
   };
 
-  const subprocessos = processos.filter(p => p.processo_pai_id === processo.id);
+  const subprocessos = processos.filter(p => p.processo_pai_id === processo.id) || [];
 
   return (
     <div className="card mb-3">
@@ -75,7 +79,7 @@ const ProcessoTree: React.FC<ProcessoTreeProps> = ({ processo, areas, processos,
                 Responsável: {processo.responsavel}
               </small>
             </div>
-            {processo.sistemas.length > 0 && (
+            {processo.sistemas && processo.sistemas.length > 0 && (
               <div className="mb-2">
                 <small className="text-muted">
                   Sistemas: {processo.sistemas.join(', ')}
