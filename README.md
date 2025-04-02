@@ -2,6 +2,8 @@
 
 Sistema web para gerenciamento de áreas e processos empresariais.
 
+#Back-end para utlizar com o front em : https://github.com/IDahok/projeto_backend_process
+
 ## Tecnologias Utilizadas
 
 - React
